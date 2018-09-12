@@ -17,8 +17,15 @@ class App extends Component {
     }
     this.toggleListen = this.toggleListen.bind(this)
     this.handleListen = this.handleListen.bind(this)
+    this.handleInput = this.handleInput.bind(this)
   }
-  
+
+  handleInput(){
+    this.setState({
+      recipeCard: 'americano'
+    }, console.log("updated!"))
+  }
+
   toggleListen() {
     this.setState({
       listening: !this.state.listening
@@ -55,6 +62,10 @@ class App extends Component {
       }
       document.getElementById('interim').innerHTML = interimTranscript
       document.getElementById('final').innerHTML = finalTranscript
+
+      if(interimTranscript.includes('Americano')){
+        this.setState({recipeCard: 'https://m1.behance.net/rendition/modules/128776933/disp/2d6c3ccfb3a5e7b7effed4631dc2d2c6.jpg'})
+      }
     }
 
     recognition.onerror = event => {
@@ -70,8 +81,10 @@ class App extends Component {
           <h1 className="App-title">Siren</h1>
         </header>
         <div className="info-container">
-          <button id='microphone-btn' onClick={this.toggleListen} />
+          <button id='microphone-btn' onClick={this.toggleListen}>start</button>
           <p>Transcript:</p>
+          <input id='test-text' type="text" name="lname"></input>
+          <button id='test-input' onClick={this.handleInput}>test</button>
           <div id='interim'></div>
           <div id='final'></div>
           <img src={this.state.recipeCard} className="recipeCard" alt="recipeCard"/>
